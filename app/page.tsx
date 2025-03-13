@@ -7,45 +7,27 @@ import { useState } from "react"
 export default function Home() {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [formSubmitted, setFormSubmitted] = useState(false)
-  const [formError, setFormError] = useState("")
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const form = e.currentTarget
-    const formData = new FormData(form)
+    const formData = new FormData(e.currentTarget)
+    const email = formData.get("email")
 
-    try {
-      // Convert FormData to a plain object
-      const formValues = Object.fromEntries(formData.entries())
-
-      // Submit to our API route
-      const response = await fetch("/api/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formValues),
-      })
-
-      const result = await response.json()
-
-      if (result.success) {
-        // Show success state
-        setFormSubmitted(true)
-        setFormError("")
-
-        // Close modal after 3 seconds
-        setTimeout(() => {
-          setDialogOpen(false)
-          setFormSubmitted(false)
-        }, 3000)
-      } else {
-        setFormError(result.message || "Something went wrong")
-      }
-    } catch (error) {
-      console.error("Form submission error:", error)
-      setFormError("An error occurred. Please try again.")
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (email && typeof email === "string" && !emailRegex.test(email)) {
+      alert("Please enter a valid email address")
+      return
     }
+
+    // Show success state
+    setFormSubmitted(true)
+
+    // Close modal after 3 seconds
+    setTimeout(() => {
+      setDialogOpen(false)
+      setFormSubmitted(false)
+    }, 3000)
   }
 
   return (
@@ -76,8 +58,6 @@ export default function Home() {
                 <p className="mb-6 text-gray-600">
                   Join thousands of people who have already claimed millions in settlement money.
                 </p>
-
-                {formError && <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md">{formError}</div>}
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
@@ -178,8 +158,190 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Rest of your sections remain the same */}
-        {/* ... */}
+        {/* How It Works Section */}
+        <section id="how-it-works" className="w-full py-16 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-blue-800 mb-4">Claim What's Yours in Just 3 Steps</h2>
+              <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+                Our AI-powered system makes it easy to find and claim settlements you qualify for.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              <div className="bg-white p-6 rounded-lg shadow-md">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mb-4 mx-auto">
+                  <span className="text-xl font-bold">1</span>
+                </div>
+                <h3 className="text-xl font-semibold text-center mb-2">Search</h3>
+                <p className="text-gray-600 text-center">Enter your email/phone to scan for eligible claims.</p>
+              </div>
+
+              <div className="bg-white p-6 rounded-lg shadow-md">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mb-4 mx-auto">
+                  <span className="text-xl font-bold">2</span>
+                </div>
+                <h3 className="text-xl font-semibold text-center mb-2">Match</h3>
+                <p className="text-gray-600 text-center">AI finds class action lawsuits you qualify for.</p>
+              </div>
+
+              <div className="bg-white p-6 rounded-lg shadow-md">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mb-4 mx-auto">
+                  <span className="text-xl font-bold">3</span>
+                </div>
+                <h3 className="text-xl font-semibold text-center mb-2">File & Track</h3>
+                <p className="text-gray-600 text-center">Submit claims in one click and get updates.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Featured Settlements Section */}
+        <section className="w-full py-16 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-blue-800 mb-4">Featured Settlements</h2>
+              <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+                These are just a few of the settlements our users are claiming right now.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              <div className="bg-white border border-gray-200 p-6 rounded-lg shadow-sm">
+                <div className="bg-red-100 text-red-600 w-12 h-12 rounded-full flex items-center justify-center mb-4 mx-auto">
+                  T
+                </div>
+                <h3 className="text-xl font-semibold text-center mb-2">T-Mobile Data Breach</h3>
+                <p className="text-green-600 font-bold text-center text-xl mb-2">$25,000 max payout</p>
+                <p className="text-gray-600 text-center mb-4">Claim before April 2025</p>
+                <button
+                  onClick={() => setDialogOpen(true)}
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md text-center"
+                >
+                  Sign Up to Claim
+                </button>
+              </div>
+
+              <div className="bg-white border border-gray-200 p-6 rounded-lg shadow-sm">
+                <div className="bg-blue-100 text-blue-600 w-12 h-12 rounded-full flex items-center justify-center mb-4 mx-auto">
+                  F
+                </div>
+                <h3 className="text-xl font-semibold text-center mb-2">Facebook Privacy Settlement</h3>
+                <p className="text-green-600 font-bold text-center text-xl mb-2">$397 per person</p>
+                <p className="text-gray-600 text-center mb-4">Claim closed in 2024</p>
+                <button
+                  onClick={() => setDialogOpen(true)}
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md text-center"
+                >
+                  Sign Up to Claim
+                </button>
+              </div>
+
+              <div className="bg-white border border-gray-200 p-6 rounded-lg shadow-sm">
+                <div className="bg-green-100 text-green-600 w-12 h-12 rounded-full flex items-center justify-center mb-4 mx-auto">
+                  L
+                </div>
+                <h3 className="text-xl font-semibold text-center mb-2">loanDepot Settlement</h3>
+                <p className="text-green-600 font-bold text-center text-xl mb-2">Up to $5,000</p>
+                <p className="text-gray-600 text-center mb-4">Open until May 2025</p>
+                <button
+                  onClick={() => setDialogOpen(true)}
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md text-center"
+                >
+                  Sign Up to Claim
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Why Trust Us Section */}
+        <section className="w-full py-16 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-blue-800 mb-4">Why Trust Us?</h2>
+              <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+                We've helped thousands of people claim what's rightfully theirs.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              <div className="bg-white p-6 rounded-lg shadow-md">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mb-4 mx-auto">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"
+                    />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-semibold text-center mb-2">AI-Powered Claim Matching</h3>
+                <p className="text-gray-600 text-center">Finds lawsuits you didn't even know you qualified for.</p>
+              </div>
+
+              <div className="bg-white p-6 rounded-lg shadow-md">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mb-4 mx-auto">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                    />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-semibold text-center mb-2">Secure & Private</h3>
+                <p className="text-gray-600 text-center">We never share your data without consent.</p>
+              </div>
+
+              <div className="bg-white p-6 rounded-lg shadow-md">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mb-4 mx-auto">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <h3 className="text-xl font-semibold text-center mb-2">Trusted by Thousands</h3>
+                <p className="text-gray-600 text-center">$10M+ in claims filed through our system.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="w-full py-16 bg-blue-600">
+          <div className="container mx-auto px-4 text-center">
+            <h2 className="text-3xl font-bold text-white mb-6">Stop Leaving Money on the Table</h2>
+            <p className="text-white text-lg mb-8 max-w-2xl mx-auto">
+              It takes less than 60 seconds to check if you're eligible for compensation.
+            </p>
+            <button
+              onClick={() => setDialogOpen(true)}
+              className="inline-block rounded-md bg-white text-blue-600 px-6 py-3 text-lg font-medium hover:bg-gray-100"
+            >
+              Sign Up Now
+            </button>
+          </div>
+        </section>
       </main>
 
       {/* Footer */}
