@@ -26,11 +26,11 @@ export async function saveSignup(formData: FormData) {
 
     // Save to Vercel Blob
     const blob = await put(`signups/${id}.json`, jsonData, {
-      access: "public", // Changed from private to public
+      access: "public", // IMPORTANT: Must be "public" for free tier
       contentType: "application/json",
     })
 
-    console.log("Signup saved:", blob.url) // This will appear in your Vercel logs
+    console.log("Signup saved:", blob.url)
 
     return { success: true, message: "Signup saved successfully!" }
   } catch (error) {
