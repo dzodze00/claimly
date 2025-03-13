@@ -135,29 +135,133 @@ export default function Home() {
           <div className="container mx-auto px-4">
             <div className="text-center">
               <h1 className="text-4xl font-extrabold tracking-tight text-blue-800 sm:text-5xl mb-6">
-                Join Claimly and <span className="text-green-600">Get Your Money Back</span>
+                Find Out If You're Owed Money From Lawsuits<span className="text-green-600">—In Seconds!</span>
               </h1>
               <p className="text-gray-600 text-lg md:text-xl mb-8">
-                Sign up today to access our database of class action settlements and start claiming what's rightfully
-                yours.
+                Every year, millions of people qualify for class action settlements but never claim them. Check if
+                you're eligible and file instantly.
               </p>
               <button
                 onClick={() => setDialogOpen(true)}
                 className="inline-block rounded-md bg-green-600 px-6 py-3 text-lg font-medium text-white hover:bg-green-700"
               >
-                Sign Up
+                Sign Up Now
               </button>
+
+              <div className="mt-10 flex flex-wrap justify-center items-center gap-6">
+                <div className="bg-gray-100 px-4 py-2 rounded-full text-gray-600 font-medium text-sm">T-Mobile</div>
+                <div className="bg-gray-100 px-4 py-2 rounded-full text-gray-600 font-medium text-sm">Equifax</div>
+                <div className="bg-gray-100 px-4 py-2 rounded-full text-gray-600 font-medium text-sm">Facebook</div>
+                <div className="bg-gray-100 px-4 py-2 rounded-full text-gray-600 font-medium text-sm">+ 100s more</div>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Features Section */}
+        {/* How It Works Section */}
+        <section id="how-it-works" className="w-full py-16 bg-gray-50">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-blue-800 mb-4">Claim What's Yours in Just 3 Steps</h2>
+              <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+                Our AI-powered system makes it easy to find and claim settlements you qualify for.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              <div className="bg-white p-6 rounded-lg shadow-md">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mb-4 mx-auto">
+                  <span className="text-xl font-bold">1</span>
+                </div>
+                <h3 className="text-xl font-semibold text-center mb-2">Search</h3>
+                <p className="text-gray-600 text-center">Enter your email/phone to scan for eligible claims.</p>
+              </div>
+
+              <div className="bg-white p-6 rounded-lg shadow-md">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mb-4 mx-auto">
+                  <span className="text-xl font-bold">2</span>
+                </div>
+                <h3 className="text-xl font-semibold text-center mb-2">Match</h3>
+                <p className="text-gray-600 text-center">AI finds class action lawsuits you qualify for.</p>
+              </div>
+
+              <div className="bg-white p-6 rounded-lg shadow-md">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mb-4 mx-auto">
+                  <span className="text-xl font-bold">3</span>
+                </div>
+                <h3 className="text-xl font-semibold text-center mb-2">File & Track</h3>
+                <p className="text-gray-600 text-center">Submit claims in one click and get updates.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Featured Settlements Section */}
+        <section className="w-full py-16 bg-white">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-blue-800 mb-4">Featured Settlements</h2>
+              <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+                These are just a few of the settlements our users are claiming right now.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              <div className="bg-white border border-gray-200 p-6 rounded-lg shadow-sm">
+                <div className="bg-red-100 text-red-600 w-12 h-12 rounded-full flex items-center justify-center mb-4 mx-auto">
+                  T
+                </div>
+                <h3 className="text-xl font-semibold text-center mb-2">T-Mobile Data Breach</h3>
+                <p className="text-green-600 font-bold text-center text-xl mb-2">$25,000 max payout</p>
+                <p className="text-gray-600 text-center mb-4">Claim before April 2025</p>
+                <button
+                  onClick={() => setDialogOpen(true)}
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md text-center"
+                >
+                  Sign Up to Claim
+                </button>
+              </div>
+
+              <div className="bg-white border border-gray-200 p-6 rounded-lg shadow-sm">
+                <div className="bg-blue-100 text-blue-600 w-12 h-12 rounded-full flex items-center justify-center mb-4 mx-auto">
+                  F
+                </div>
+                <h3 className="text-xl font-semibold text-center mb-2">Facebook Privacy Settlement</h3>
+                <p className="text-green-600 font-bold text-center text-xl mb-2">$397 per person</p>
+                <p className="text-gray-600 text-center mb-4">Claim closed in 2024</p>
+                <button
+                  onClick={() => setDialogOpen(true)}
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md text-center"
+                >
+                  Sign Up to Claim
+                </button>
+              </div>
+
+              <div className="bg-white border border-gray-200 p-6 rounded-lg shadow-sm">
+                <div className="bg-green-100 text-green-600 w-12 h-12 rounded-full flex items-center justify-center mb-4 mx-auto">
+                  L
+                </div>
+                <h3 className="text-xl font-semibold text-center mb-2">loanDepot Settlement</h3>
+                <p className="text-green-600 font-bold text-center text-xl mb-2">Up to $5,000</p>
+                <p className="text-gray-600 text-center mb-4">Open until May 2025</p>
+                <button
+                  onClick={() => setDialogOpen(true)}
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md text-center"
+                >
+                  Sign Up to Claim
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Why Trust Us Section */}
         <section className="w-full py-16 bg-gray-50">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-blue-800 mb-4">Why Join Claimly?</h2>
+              <h2 className="text-3xl font-bold text-blue-800 mb-4">Why Trust Us?</h2>
               <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-                Our platform makes it easy to find and claim settlements you qualify for.
+                We've helped thousands of people claim what's rightfully theirs.
               </p>
             </div>
 
@@ -175,14 +279,12 @@ export default function Home() {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth={2}
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                      d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"
                     />
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold text-center mb-2">Find Settlements</h3>
-                <p className="text-gray-600 text-center">
-                  Access our database of hundreds of class action settlements you may qualify for.
-                </p>
+                <h3 className="text-xl font-semibold text-center mb-2">AI-Powered Claim Matching</h3>
+                <p className="text-gray-600 text-center">Finds lawsuits you didn't even know you qualified for.</p>
               </div>
 
               <div className="bg-white p-6 rounded-lg shadow-md">
@@ -198,14 +300,12 @@ export default function Home() {
                       strokeLinecap="round"
                       strokeLinejoin="round"
                       strokeWidth={2}
-                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                      d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
                     />
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold text-center mb-2">Easy Claims</h3>
-                <p className="text-gray-600 text-center">
-                  Submit claims with just a few clicks and let us handle the paperwork.
-                </p>
+                <h3 className="text-xl font-semibold text-center mb-2">Secure & Private</h3>
+                <p className="text-gray-600 text-center">We never share your data without consent.</p>
               </div>
 
               <div className="bg-white p-6 rounded-lg shadow-md">
@@ -217,20 +317,29 @@ export default function Home() {
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-semibold text-center mb-2">Get Paid</h3>
-                <p className="text-gray-600 text-center">
-                  Receive notifications when your claims are approved and track your payments.
-                </p>
+                <h3 className="text-xl font-semibold text-center mb-2">Trusted by Thousands</h3>
+                <p className="text-gray-600 text-center">$10M+ in claims filed through our system.</p>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="w-full py-16 bg-blue-600">
+          <div className="container mx-auto px-4 text-center">
+            <h2 className="text-3xl font-bold text-white mb-6">Stop Leaving Money on the Table</h2>
+            <p className="text-white text-lg mb-8 max-w-2xl mx-auto">
+              It takes less than 60 seconds to check if you're eligible for compensation.
+            </p>
+            <button
+              onClick={() => setDialogOpen(true)}
+              className="inline-block rounded-md bg-white text-blue-600 px-6 py-3 text-lg font-medium hover:bg-gray-100"
+            >
+              Sign Up Now
+            </button>
           </div>
         </section>
       </main>
