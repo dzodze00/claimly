@@ -3,31 +3,46 @@
 import type React from "react"
 
 import { useState } from "react"
+import { saveSignup } from "./actions"
 
 export default function Home() {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [formSubmitted, setFormSubmitted] = useState(false)
+  const [formError, setFormError] = useState("")
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    const email = formData.get("email")
+    const form = e.currentTarget
+    const formData = new FormData(form)
 
     // Basic email validation
+    const email = formData.get("email")
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (email && typeof email === "string" && !emailRegex.test(email)) {
-      alert("Please enter a valid email address")
+      setFormError("Please enter a valid email address")
       return
     }
 
-    // Show success state
-    setFormSubmitted(true)
+    try {
+      const result = await saveSignup(formData)
 
-    // Close modal after 3 seconds
-    setTimeout(() => {
-      setDialogOpen(false)
-      setFormSubmitted(false)
-    }, 3000)
+      if (result.success) {
+        // Show success state
+        setFormSubmitted(true)
+        setFormError("")
+
+        // Close modal after 3 seconds
+        setTimeout(() => {
+          setDialogOpen(false)
+          setFormSubmitted(false)
+        }, 3000)
+      } else {
+        setFormError(result.message)
+      }
+    } catch (error) {
+      console.error("Form submission error:", error)
+      setFormError("An error occurred. Please try again.")
+    }
   }
 
   return (
@@ -58,6 +73,8 @@ export default function Home() {
                 <p className="mb-6 text-gray-600">
                   Join thousands of people who have already claimed millions in settlement money.
                 </p>
+
+                {formError && <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md">{formError}</div>}
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
@@ -107,6 +124,7 @@ export default function Home() {
         </div>
       )}
 
+      {/* Rest of the page content remains the same */}
       {/* Header */}
       <header className="sticky top-0 z-40 w-full border-b bg-white/90 backdrop-blur-md shadow-sm">
         <div className="container mx-auto flex h-16 items-center justify-between px-4">
