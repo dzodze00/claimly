@@ -1,19 +1,21 @@
 "use client"
 
+import type React from "react"
+
 import { useState } from "react"
 
 export default function Home() {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [formSubmitted, setFormSubmitted] = useState(false)
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
     const email = formData.get("email")
 
     // Basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    if (!emailRegex.test(email)) {
+    if (email && typeof email === "string" && !emailRegex.test(email)) {
       alert("Please enter a valid email address")
       return
     }
