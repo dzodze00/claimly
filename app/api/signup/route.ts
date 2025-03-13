@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
 
     // Save to Vercel Blob
     const blob = await put(`signups/${id}.json`, jsonData, {
-      access: "public",
+      access: "public", // IMPORTANT: Must be "public" for free tier
       contentType: "application/json",
     })
 
