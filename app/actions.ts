@@ -26,7 +26,7 @@ export async function saveSignup(formData: FormData) {
 
     // Save to Vercel Blob
     const blob = await put(`signups/${id}.json`, jsonData, {
-      access: "private", // Make sure it's private since it contains personal data
+      access: "public", // Changed from private to public
       contentType: "application/json",
     })
 
@@ -38,4 +38,3 @@ export async function saveSignup(formData: FormData) {
     return { success: false, message: "Failed to save signup. Please try again." }
   }
 }
-
