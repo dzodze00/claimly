@@ -3,55 +3,36 @@
 import type React from "react"
 
 import { useState } from "react"
-import { saveSignup } from "./actions"
 
 export default function Home() {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [formSubmitted, setFormSubmitted] = useState(false)
   const [formError, setFormError] = useState("")
-  const [debugInfo, setDebugInfo] = useState<any>(null)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setFormError("")
-    setDebugInfo(null)
+    const form = e.currentTarget
+    const formData = new FormData(form)
 
     try {
-      const form = e.currentTarget
-      const formData = new FormData(form)
+      // Convert FormData to a plain object
+      const formValues = Object.fromEntries(formData.entries())
 
-      // Basic email validation
-      const email = formData.get("email")
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-      if (email && typeof email === "string" && !emailRegex.test(email)) {
-        setFormError("Please enter a valid email address")
-        return
-      }
-
-      // Test the Blob API first
-      const testResponse = await fetch("/api/test-blob")
-      const testResult = await testResponse.json()
-
-      setDebugInfo({
-        testBlobResult: testResult,
+      // Submit to our API route
+      const response = await fetch("/api/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formValues),
       })
 
-      if (!testResult.success) {
-        setFormError(`Blob test failed: ${testResult.message}`)
-        return
-      }
-
-      // Now try the actual signup
-      const result = await saveSignup(formData)
-
-      setDebugInfo((prev) => ({
-        ...prev,
-        signupResult: result,
-      }))
+      const result = await response.json()
 
       if (result.success) {
         // Show success state
         setFormSubmitted(true)
+        setFormError("")
 
         // Close modal after 3 seconds
         setTimeout(() => {
@@ -59,19 +40,13 @@ export default function Home() {
           setFormSubmitted(false)
         }, 3000)
       } else {
-        setFormError(result.message)
+        setFormError(result.message || "Something went wrong")
       }
     } catch (error) {
       console.error("Form submission error:", error)
       setFormError("An error occurred. Please try again.")
-      setDebugInfo((prev) => ({
-        ...prev,
-        error: error instanceof Error ? error.message : String(error),
-      }))
     }
   }
-
-  // Rest of your component remains the same, but add this debug info display
 
   return (
     <div className="flex min-h-screen flex-col bg-gradient-to-b from-blue-50 to-white">
@@ -103,12 +78,6 @@ export default function Home() {
                 </p>
 
                 {formError && <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-md">{formError}</div>}
-
-                {debugInfo && (
-                  <div className="mb-4 p-3 bg-gray-100 text-gray-700 rounded-md text-xs overflow-auto max-h-40">
-                    <pre>{JSON.stringify(debugInfo, null, 2)}</pre>
-                  </div>
-                )}
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
@@ -158,8 +127,145 @@ export default function Home() {
         </div>
       )}
 
-      {/* Rest of your component remains the same */}
-      {/* ... */}
+      {/* Header */}
+      <header className="sticky top-0 z-40 w-full border-b bg-white/90 backdrop-blur-md shadow-sm">
+        <div className="container mx-auto flex h-16 items-center justify-between px-4">
+          <div className="flex items-center">
+            <a href="/" className="flex items-center space-x-2">
+              <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold">
+                C
+              </div>
+              <span className="font-bold text-blue-600 text-xl">Claimly</span>
+            </a>
+          </div>
+          <div className="flex items-center space-x-4">
+            <button
+              onClick={() => setDialogOpen(true)}
+              className="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 transition-colors shadow-sm"
+            >
+              Sign Up
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main className="flex-1">
+        {/* Hero Section */}
+        <section className="w-full py-12 md:py-24 lg:py-32">
+          <div className="container mx-auto px-4">
+            <div className="text-center">
+              <h1 className="text-4xl font-extrabold tracking-tight text-blue-800 sm:text-5xl mb-6">
+                Find Out If You're Owed Money From Lawsuits<span className="text-green-600">—In Seconds!</span>
+              </h1>
+              <p className="text-gray-600 text-lg md:text-xl mb-8">
+                Every year, millions of people qualify for class action settlements but never claim them. Check if
+                you're eligible and file instantly.
+              </p>
+              <button
+                onClick={() => setDialogOpen(true)}
+                className="inline-block rounded-md bg-green-600 px-6 py-3 text-lg font-medium text-white hover:bg-green-700"
+              >
+                Sign Up Now
+              </button>
+
+              <div className="mt-10 flex flex-wrap justify-center items-center gap-6">
+                <div className="bg-gray-100 px-4 py-2 rounded-full text-gray-600 font-medium text-sm">T-Mobile</div>
+                <div className="bg-gray-100 px-4 py-2 rounded-full text-gray-600 font-medium text-sm">Equifax</div>
+                <div className="bg-gray-100 px-4 py-2 rounded-full text-gray-600 font-medium text-sm">Facebook</div>
+                <div className="bg-gray-100 px-4 py-2 rounded-full text-gray-600 font-medium text-sm">+ 100s more</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Rest of your sections remain the same */}
+        {/* ... */}
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-gray-300 py-8">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div>
+              <div className="flex items-center space-x-2 mb-4">
+                <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold">
+                  C
+                </div>
+                <span className="font-bold text-white text-xl">Claimly</span>
+              </div>
+              <p className="text-gray-400">Making it easy to find and claim settlements you qualify for.</p>
+            </div>
+
+            <div>
+              <h3 className="text-white font-semibold mb-4">Company</h3>
+              <ul className="space-y-2">
+                <li>
+                  <a href="#" className="text-gray-400 hover:text-white">
+                    About Us
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-400 hover:text-white">
+                    Careers
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-400 hover:text-white">
+                    Press
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-white font-semibold mb-4">Resources</h3>
+              <ul className="space-y-2">
+                <li>
+                  <a href="#" className="text-gray-400 hover:text-white">
+                    Settlement Database
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-400 hover:text-white">
+                    FAQs
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-400 hover:text-white">
+                    How It Works
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h3 className="text-white font-semibold mb-4">Legal</h3>
+              <ul className="space-y-2">
+                <li>
+                  <a href="#" className="text-gray-400 hover:text-white">
+                    Privacy Policy
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-400 hover:text-white">
+                    Terms of Service
+                  </a>
+                </li>
+                <li>
+                  <a href="#" className="text-gray-400 hover:text-white">
+                    Cookie Policy
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="border-t border-gray-800 pt-8 text-center text-gray-400 text-sm">
+            <p>&copy; {new Date().getFullYear()} Claimly. All rights reserved.</p>
+            <p className="mt-2">Claimly is not a law firm and does not provide legal advice.</p>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }
