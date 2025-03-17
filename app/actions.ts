@@ -25,7 +25,7 @@ export async function saveSignup(formData: FormData) {
     const supabase = getSupabaseServerClient()
     console.log("Supabase client initialized")
 
-    // Insert into users table
+    // Insert into users table with explicit return type
     console.log("Attempting to insert user into database")
     const { data, error } = await supabase.from("users").insert({
       first_name: firstName,
@@ -38,7 +38,7 @@ export async function saveSignup(formData: FormData) {
       console.error("Supabase error:", error)
       return {
         success: false,
-        message: error.message,
+        message: "Database error: " + error.message,
       }
     }
 
@@ -47,6 +47,7 @@ export async function saveSignup(formData: FormData) {
     return {
       success: true,
       message: "Thank you for signing up!",
+      debug: { firstName, lastName, email },
     }
   } catch (error) {
     console.error("Server action error:", error)
