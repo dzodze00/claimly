@@ -2,10 +2,8 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { SignupForm } from "@/components/signup-form"
-import { Card, CardContent, CardFooter } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation"
+import { SignupForm } from "@/components/signup-form"
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -110,53 +108,62 @@ export default function Home() {
           </p>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <Card className="border border-gray-200 overflow-hidden">
-              <CardContent className="p-6">
+            <div className="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm">
+              <div className="p-6">
                 <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-semibold mb-4">
                   T
                 </div>
                 <h3 className="text-xl font-bold mb-2">T-Mobile Data Breach</h3>
                 <p className="text-2xl font-bold text-green-600 mb-1">$25,000 max payout</p>
                 <p className="text-sm text-gray-500 mb-6">Claim before April 2025</p>
-              </CardContent>
-              <CardFooter className="bg-gray-50 p-4">
-                <Button onClick={openModal} className="w-full bg-blue-600 hover:bg-blue-700">
+              </div>
+              <div className="bg-gray-50 p-4">
+                <button
+                  onClick={openModal}
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors"
+                >
                   Sign Up to Claim
-                </Button>
-              </CardFooter>
-            </Card>
+                </button>
+              </div>
+            </div>
 
-            <Card className="border border-gray-200 overflow-hidden">
-              <CardContent className="p-6">
+            <div className="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm">
+              <div className="p-6">
                 <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-semibold mb-4">
                   F
                 </div>
                 <h3 className="text-xl font-bold mb-2">Facebook Privacy Settlement</h3>
                 <p className="text-2xl font-bold text-green-600 mb-1">$397 per person</p>
                 <p className="text-sm text-gray-500 mb-6">Claim closed in 2024</p>
-              </CardContent>
-              <CardFooter className="bg-gray-50 p-4">
-                <Button onClick={openModal} className="w-full bg-blue-600 hover:bg-blue-700">
+              </div>
+              <div className="bg-gray-50 p-4">
+                <button
+                  onClick={openModal}
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors"
+                >
                   Sign Up to Claim
-                </Button>
-              </CardFooter>
-            </Card>
+                </button>
+              </div>
+            </div>
 
-            <Card className="border border-gray-200 overflow-hidden">
-              <CardContent className="p-6">
+            <div className="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm">
+              <div className="p-6">
                 <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-semibold mb-4">
                   L
                 </div>
                 <h3 className="text-xl font-bold mb-2">loanDepot Settlement</h3>
                 <p className="text-2xl font-bold text-green-600 mb-1">Up to $5,000</p>
                 <p className="text-sm text-gray-500 mb-6">Open until May 2025</p>
-              </CardContent>
-              <CardFooter className="bg-gray-50 p-4">
-                <Button onClick={openModal} className="w-full bg-blue-600 hover:bg-blue-700">
+              </div>
+              <div className="bg-gray-50 p-4">
+                <button
+                  onClick={openModal}
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors"
+                >
                   Sign Up to Claim
-                </Button>
-              </CardFooter>
-            </Card>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -234,9 +241,12 @@ export default function Home() {
           <p className="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">
             It takes less than 60 seconds to check if you're eligible for compensation.
           </p>
-          <Button onClick={openModal} className="bg-green-600 hover:bg-green-700 text-white px-8 py-6 text-lg">
+          <button
+            onClick={openModal}
+            className="bg-green-600 hover:bg-green-700 text-white font-medium px-8 py-3 rounded-md text-lg transition-colors"
+          >
             Sign Up Now
-          </Button>
+          </button>
         </div>
       </section>
 
