@@ -6,10 +6,13 @@ import { saveSignup } from "@/app/actions"
 export function SignupFormAction() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [message, setMessage] = useState<{ text: string; type: "success" | "error" } | null>(null)
+  const [logs, setLogs] = useState<string[]>([])
+  const [showLogs, setShowLogs] = useState(false)
 
   async function handleSubmit(formData: FormData) {
     setIsSubmitting(true)
     setMessage(null)
+    setLogs([])
     console.log("Form submitted with Server Action")
 
     try {
@@ -27,12 +30,20 @@ export function SignupFormAction() {
           type: "error",
         })
       }
+
+      // Store logs if they exist
+      if (result.logs) {
+        setLogs(result.logs)
+        setShowLogs(true)
+      }
     } catch (error) {
       console.error("Form submission error:", error)
       setMessage({
         text: error instanceof Error ? error.message : "Something went wrong",
         type: "error",
       })
+      setLogs([`Client error: ${error instanceof Error ? error.message : "Unknown error"}`])
+      setShowLogs(true)
     } finally {
       setIsSubmitting(false)
     }
@@ -49,6 +60,24 @@ export function SignupFormAction() {
           }`}
         >
           {message.text}
+        </div>
+      )}
+
+      {logs.length > 0 && (
+        <div className="mb-4">
+          <button onClick={() => setShowLogs(!showLogs)} className="text-sm text-blue-600 hover:underline mb-2">
+            {showLogs ? "Hide Debug Logs" : "Show Debug Logs"}
+          </button>
+
+          {showLogs && (
+            <div className="bg-gray-50 p-3 rounded-md text-xs font-mono overflow-auto max-h-40">
+              {logs.map((log, i) => (
+                <div key={i} className="mb-1">
+                  {log}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
 
