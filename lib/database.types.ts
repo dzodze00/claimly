@@ -1,11 +1,4 @@
-// lib/database.types.ts
-export type Json =
-  | string
-  | number
-  | boolean
-  | null
-  | { [key: string]: Json | undefined }
-  | Json[]
+export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[]
 
 export interface Database {
   public: {
@@ -13,42 +6,38 @@ export interface Database {
       users: {
         Row: {
           id: string
-          email: string
           first_name: string
           last_name: string
-          phone: string | null
-          state: string | null
-          zip_code: string | null
-          points: number
-          created_at: string
-          updated_at: string | null
+          email: string
+          phone?: string | null
+          state?: string | null
+          zip_code?: string | null
+          created_at?: string
+          updated_at?: string
         }
         Insert: {
           id?: string
-          email: string
           first_name: string
           last_name: string
+          email: string
           phone?: string | null
           state?: string | null
           zip_code?: string | null
-          points?: number
           created_at?: string
-          updated_at?: string | null
+          updated_at?: string
         }
         Update: {
           id?: string
-          email?: string
           first_name?: string
           last_name?: string
+          email?: string
           phone?: string | null
           state?: string | null
           zip_code?: string | null
-          points?: number
           created_at?: string
-          updated_at?: string | null
+          updated_at?: string
         }
       }
-      // Add other tables as needed
     }
     Views: {
       [_ in never]: never
@@ -61,3 +50,4 @@ export interface Database {
     }
   }
 }
+
