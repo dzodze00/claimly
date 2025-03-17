@@ -2,12 +2,10 @@
 
 import { useState } from "react"
 import { saveSignup } from "@/app/actions"
-import { useRouter } from "next/navigation"
 
 export function SignupFormAction() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [message, setMessage] = useState<{ text: string; type: "success" | "error" } | null>(null)
-  const router = useRouter()
 
   async function handleSubmit(formData: FormData) {
     setIsSubmitting(true)
@@ -23,13 +21,6 @@ export function SignupFormAction() {
           text: result.message,
           type: "success",
         })
-
-        // Redirect to thank you page if userId is available
-        if (result.userId) {
-          setTimeout(() => {
-            router.push(`/thank-you?id=${result.userId}`)
-          }, 1000)
-        }
       } else {
         setMessage({
           text: result.message,
@@ -71,7 +62,7 @@ export function SignupFormAction() {
             id="email"
             name="email"
             required
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full px-3 py-2 border rounded-md"
             placeholder="your@email.com"
           />
         </div>
@@ -86,20 +77,14 @@ export function SignupFormAction() {
               id="firstName"
               name="firstName"
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-3 py-2 border rounded-md"
             />
           </div>
           <div>
             <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">
               Last Name
             </label>
-            <input
-              type="text"
-              id="lastName"
-              name="lastName"
-              required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+            <input type="text" id="lastName" name="lastName" required className="w-full px-3 py-2 border rounded-md" />
           </div>
         </div>
 
