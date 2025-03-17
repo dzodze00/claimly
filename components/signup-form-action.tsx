@@ -70,7 +70,7 @@ export function SignupFormAction() {
           </button>
 
           {showLogs && (
-            <div className="bg-gray-50 p-3 rounded-md text-xs font-mono overflow-auto max-h-40">
+            <div className="bg-gray-50 p-3 rounded-md text-xs font-mono overflow-auto max-h-60">
               {logs.map((log, i) => (
                 <div key={i} className="mb-1">
                   {log}
@@ -142,7 +142,7 @@ export function SignupFormAction() {
           disabled={isSubmitting}
           className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md transition-colors disabled:opacity-50"
         >
-          {isSubmitting ? "Processing..." : "Start My Free Scan"}
+          {isSubmitting ? "Processing..." : "Sign Me Up"}
         </button>
       </form>
     </div>
