@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { SignupFormAction } from "@/components/signup-form-action"
+import { SignupForm } from "@/components/signup-form"
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -117,7 +117,7 @@ export default function Home() {
             </div>
 
             <div className="p-6">
-              <SignupFormAction />
+              <SignupForm />
             </div>
           </div>
         </div>
@@ -125,3 +125,4 @@ export default function Home() {
     </div>
   )
 }
+
