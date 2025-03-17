@@ -27,16 +27,12 @@ export async function saveSignup(formData: FormData) {
 
     // Insert into users table
     console.log("Attempting to insert user into database")
-    const { data, error } = await supabase
-      .from("users")
-      .insert({
-        first_name: firstName,
-        last_name: lastName,
-        email: email,
-        created_at: new Date().toISOString(),
-      })
-      .select("id")
-      .single()
+    const { data, error } = await supabase.from("users").insert({
+      first_name: firstName,
+      last_name: lastName,
+      email: email,
+      created_at: new Date().toISOString(),
+    })
 
     if (error) {
       console.error("Supabase error:", error)
@@ -46,12 +42,11 @@ export async function saveSignup(formData: FormData) {
       }
     }
 
-    console.log("Insert successful, user ID:", data?.id)
+    console.log("Insert successful")
 
     return {
       success: true,
       message: "Thank you for signing up!",
-      userId: data?.id,
     }
   } catch (error) {
     console.error("Server action error:", error)
