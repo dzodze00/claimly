@@ -11,7 +11,7 @@ const createBrowserClient = () => {
 
 // Create a single supabase client for server components
 const createServerClient = () => {
-  const supabaseUrl = process.env.SUPABASE_URL as string
+  const supabaseUrl = process.env.SUPABASE_URL || (process.env.NEXT_PUBLIC_SUPABASE_URL as string)
   const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY as string
 
   return createClient<Database>(supabaseUrl, supabaseServiceKey)
