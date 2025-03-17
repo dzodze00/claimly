@@ -48,7 +48,7 @@ export default function Home() {
             onClick={openModal}
             className="bg-green-600 hover:bg-green-700 text-white font-medium px-6 py-3 rounded-md text-lg transition-colors"
           >
-            Sign Up Now
+            Sign Me Up
           </button>
 
           <div className="mt-12 flex flex-wrap justify-center gap-6">
@@ -125,4 +125,3 @@ export default function Home() {
     </div>
   )
 }
-
