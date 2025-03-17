@@ -29,4 +29,3 @@ export const getSupabaseBrowserClient = () => {
 export const getSupabaseServerClient = () => {
   return createServerClient()
 }
-
