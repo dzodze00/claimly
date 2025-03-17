@@ -1,42 +1,68 @@
-import { put } from "@vercel/blob"
-import { type NextRequest, NextResponse } from "next/server"
+import { NextRequest, NextResponse } from 'next/server'
+import { getSupabaseServerClient } from '@/lib/supabase'
 
 export async function POST(request: NextRequest) {
   try {
-    const data = await request.json()
-
-    // Create a unique ID for this signup
-    const id = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`
-
-    // Convert to JSON string
-    const jsonData = JSON.stringify({
-      ...data,
-      id,
-      timestamp: new Date().toISOString(),
-    })
-
-    // Save to Vercel Blob
-    const blob = await put(`signups/${id}.json`, jsonData, {
-      access: "public", // IMPORTANT: Must be "public" for free tier
-      contentType: "application/json",
-    })
-
-    console.log("Signup saved:", blob.url)
-
-    return NextResponse.json({
-      success: true,
-      message: "Signup saved successfully!",
-      url: blob.url,
+    const { firstName, lastName, email } = await request.json()
+    
+    if (!firstName || !lastName || !email) {
+      return NextResponse.json(
+        { error: 'Missing required fields' },
+        { status: 400 }
+      )
+    }
+    
+    const supabase = getSupabaseServerClient()
+    
+    // Check if user already exists
+    const { data: existingUser } = await supabase
+      .from('users')
+      .select('id')
+      .eq('email', email)
+      .maybeSingle()
+    
+    let userId
+    
+    if (existingUser) {
+      // Update existing user
+      const { error } = await supabase
+        .from('users')
+        .update({
+          first_name: firstName,
+          last_name: lastName,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', existingUser.id)
+      
+      if (error) throw error
+      userId = existingUser.id
+    } else {
+      // Insert new user
+      const { data, error } = await supabase
+        .from('users')
+        .insert({
+          email,
+          first_name: firstName,
+          last_name: lastName,
+          points: 10, // Starting points for new users
+        })
+        .select('id')
+        .single()
+      
+      if (error) throw error
+      userId = data.id
+    }
+    
+    return NextResponse.json({ 
+      success: true, 
+      message: 'User information saved successfully',
+      userId 
     })
   } catch (error) {
-    console.error("Error saving signup:", error)
+    console.error('Error saving user data:', error)
     return NextResponse.json(
-      {
-        success: false,
-        message: "Failed to save signup. Please try again.",
-        error: error instanceof Error ? error.message : String(error),
-      },
-      { status: 500 },
+      { error: 'Failed to save user information' },
+      { status: 500 }
     )
   }
 }
